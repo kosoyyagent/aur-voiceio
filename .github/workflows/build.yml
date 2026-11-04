@@ -1,0 +1,23 @@
+name: makepkg
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install build tools
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git curl uv
+          useradd -m builder && echo 'builder ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/builder
+      - name: makepkg
+        run: |
+          cp -r "$GITHUB_WORKSPACE" /home/builder/pkg && chown -R builder:builder /home/builder/pkg
+          cd /home/builder/pkg && sudo -u builder makepkg --noconfirm --syncdeps --log
+          ls -la *.pkg.tar.zst
+      - name: verify install
+        run: |
+          pkg=$(ls /home/builder/pkg/*.pkg.tar.zst | head -1)
+          pacman -U --noconfirm "$pkg"
+          voiceio --version || true
+          voiceio --help | head -15 || true

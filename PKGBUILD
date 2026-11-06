@@ -10,7 +10,7 @@
 
 pkgname=voiceio
 _name=python_voiceio
-pkgver=1.15.2
+pkgver=1.17.0
 pkgrel=1
 pkgdesc="Local voice dictation for Linux: speak, and the text appears at your cursor"
 arch=('x86_64')
@@ -32,7 +32,7 @@ options=('!strip' '!debug')
 source=("https://files.pythonhosted.org/packages/py3/${_name::1}/python-voiceio/${_name}-${pkgver}-py3-none-any.whl"
         "build-bundle.sh")
 noextract=("${_name}-${pkgver}-py3-none-any.whl")
-sha256sums=('b814f3fadeb1914d0869369e5b0deb9eabf6808b67ba8a18c58c5ff7adc2fd3f'
+sha256sums=('a20ac86f1b682558bf0e55916a615280108df0583788348314dcd65129dbb212'
             '72c0cf73afdd409266b3f98ecab7823a5f14f2215d7ca44ff45fa8f3af895660')
 
 build() {
